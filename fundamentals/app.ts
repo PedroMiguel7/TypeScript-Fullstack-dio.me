@@ -1,14 +1,20 @@
-var a = "a";
-let b: string = "b";
-const c = "c";
+interface Person {
+  name: string;
+  age: number;
+  profession?: string;
+}
 
-let n: number = 2;
-let x: boolean = true;
-let m: string | number = 2;
+const person: Person = {
+  name: "Pedro Miguel",
+  age: 21,
+};
 
-// b = "2";
-// c = "3"; // Error because c is a constant
+const person2: Person = {
+  name: "migule",
+  age: 510,
+  profession: "Software Engineer",
+};
 
-// b = 2; // Error because b is a string
-// m = "pedro miguel";
-// m = false; // Error because m is a string or a number
+const persons: Person[] | Array<Person> = [person, person2];
+const nums: number[] | Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const strings: string[] | Array<string> = ["a", "b", "c", "d", "e", "f", "g"];
