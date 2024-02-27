@@ -1,20 +1,26 @@
-interface Person {
-  name: string;
-  age: number;
-  profession?: string;
+const num: number = 15;
+
+if (num > 15) {
+  console.log("Number is greater than 15");
+} else if (num === 15) {
+  console.log("Number is equal to 15");
+} else {
+  console.log("Number is less than 15");
 }
 
-const person: Person = {
-  name: "Pedro Miguel",
-  age: 21,
+const typeUser = {
+  admin: "admin",
+  student: "student",
+  teacher: "teacher",
+  viewer: "viewer",
 };
 
-const person2: Person = {
-  name: "migule",
-  age: 510,
-  profession: "Software Engineer",
-};
+function validateTypeUser(user: keyof typeof typeUser) {
+  console.log(typeUser[user] || "Invalid user type");
+}
 
-const persons: Person[] | Array<Person> = [person, person2];
-const nums: number[] | Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const strings: string[] | Array<string> = ["a", "b", "c", "d", "e", "f", "g"];
+const user = "admin";
+validateTypeUser(user);
+validateTypeUser("student");
+validateTypeUser("teacher");
+validateTypeUser("viewer");
