@@ -1,10 +1,5 @@
-for (let i = 0; i < 5; i++) {
-  console.log("Hello, TypeScript!", i);
-}
+const arrayNum: Array<number> = [1, 2, 3, 4];
 
-let n = 2;
-
-while (n < 5) {
-  console.log("Hello", n);
-  n++;
-}
+console.log(arrayNum);
+arrayNum.pop();
+console.log(arrayNum);
