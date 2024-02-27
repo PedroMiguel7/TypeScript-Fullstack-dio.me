@@ -1,26 +1,10 @@
-const num: number = 15;
-
-if (num > 15) {
-  console.log("Number is greater than 15");
-} else if (num === 15) {
-  console.log("Number is equal to 15");
-} else {
-  console.log("Number is less than 15");
+for (let i = 0; i < 5; i++) {
+  console.log("Hello, TypeScript!", i);
 }
 
-const typeUser = {
-  admin: "admin",
-  student: "student",
-  teacher: "teacher",
-  viewer: "viewer",
-};
+let n = 2;
 
-function validateTypeUser(user: keyof typeof typeUser) {
-  console.log(typeUser[user] || "Invalid user type");
+while (n < 5) {
+  console.log("Hello", n);
+  n++;
 }
-
-const user = "admin";
-validateTypeUser(user);
-validateTypeUser("student");
-validateTypeUser("teacher");
-validateTypeUser("viewer");
