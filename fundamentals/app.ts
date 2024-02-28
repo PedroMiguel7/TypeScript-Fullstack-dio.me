@@ -1,10 +1,19 @@
-const arrayNum: Array<number> = [1, 2, 3, 4];
+class User {
+  name: string;
+  age: number;
 
-arrayNum.forEach((num) => {
-  console.log(num);
-});
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
 
-arrayNum.map((num) => {
-  console.log(num);
-  return num;
-});
+  showName() {
+    console.log(this.name);
+  }
+}
+
+const user = new User("John", 30);
+const otherUser = new User("Jane", 25);
+
+user.showName();
+otherUser.showName();
