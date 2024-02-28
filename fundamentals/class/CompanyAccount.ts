@@ -8,11 +8,12 @@ export class CompanyAccount extends DioAccount {
     this.cnpj = cnpj;
   }
 
-  getLoan() {
-    console.log("Loan granted");
-  }
+  getLoan(amount: number) {
+    if (this.validateStatus()) {
+      this.setBalance(amount);
+      return;
+    }
 
-  deposit(amount: number): void {
-    console.log(`Depositedddd ${amount} in account ${this.accountNumber}`);
+    throw new Error("Invalid loan.");
   }
 }
