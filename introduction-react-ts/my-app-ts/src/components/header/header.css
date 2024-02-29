@@ -1,5 +1,18 @@
 .header {
-  background-color: orange;
+  background-color: #5495ec;
   width: 100%;
   text-align: center;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.header img {
+  width: 50px;
+  margin-right: calc((100vh / 2) - 50px);
+}
+
+.header h1 {
+  margin: 0;
+  flex-grow: 1;
 }
