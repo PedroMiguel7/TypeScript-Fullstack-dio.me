@@ -1,14 +1,19 @@
-import { Button, Center, ChakraProvider, Flex, Input } from "@chakra-ui/react";
-
-import { Layout } from "./components/layout";
+import { Box, Button, ChakraProvider, Input, Center } from "@chakra-ui/react";
 
 function App() {
   return (
     <ChakraProvider>
-      <Center>
-        <Layout>
-          <Flex direction={"column"}>
-            <h1>faça login</h1>
+      <Box minHeight={"100vh"} backgroundColor={"#9413dc"} padding={"25px"}>
+        <Center>
+          <Box
+            backgroundColor={"#ffffff"}
+            borderRadius={"25px"}
+            padding={"15px"}
+            maxWidth={"500px"}
+          >
+            <Center>
+              <h1>faça login</h1>
+            </Center>
             <label htmlFor="emailInput">Email</label>
             <Input
               type="email"
@@ -21,10 +26,19 @@ function App() {
               placeholder="Digite sua senha"
               id="passwordInput"
             />
-            <Button marginTop={"10px"}>Entrar</Button>
-          </Flex>
-        </Layout>
-      </Center>
+            <Center>
+              <Button
+                colorScheme="teal"
+                size={"sm"}
+                marginTop={"10px"}
+                width={"100%"}
+              >
+                Entrar
+              </Button>
+            </Center>
+          </Box>
+        </Center>
+      </Box>
     </ChakraProvider>
   );
 }
