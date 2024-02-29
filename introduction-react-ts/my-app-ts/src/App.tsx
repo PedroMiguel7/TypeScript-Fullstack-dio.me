@@ -1,4 +1,11 @@
-import { Box, Button, ChakraProvider, Input, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ChakraProvider,
+  Input,
+  Center,
+  Grid,
+} from "@chakra-ui/react";
 
 function App() {
   return (
@@ -9,33 +16,34 @@ function App() {
             backgroundColor={"#ffffff"}
             borderRadius={"25px"}
             padding={"15px"}
-            maxWidth={"500px"}
+            width={"500px"}
           >
-            <Center>
-              <h1>faça login</h1>
-            </Center>
-            <label htmlFor="emailInput">Email</label>
-            <Input
-              type="email"
-              placeholder="Digite seu email"
-              id="emailInput"
-            />
-            <label htmlFor="passwordInput">Senha</label>
-            <Input
-              type="password"
-              placeholder="Digite sua senha"
-              id="passwordInput"
-            />
-            <Center>
-              <Button
-                colorScheme="teal"
-                size={"sm"}
-                marginTop={"10px"}
-                width={"100%"}
-              >
-                Entrar
-              </Button>
-            </Center>
+            <Grid gap={"20px"}>
+              <Center>
+                <h1>Bem vindo</h1>
+              </Center>
+              <div>
+                <label htmlFor="emailInput">Email</label>
+                <Input
+                  type="email"
+                  placeholder="Digite seu email"
+                  id="emailInput"
+                />
+              </div>
+              <div>
+                <label htmlFor="passwordInput">Senha</label>
+                <Input
+                  type="password"
+                  placeholder="Digite sua senha"
+                  id="passwordInput"
+                />
+              </div>
+              <Center>
+                <Button colorScheme="teal" size={"sm"} width={"100%"}>
+                  Entrar
+                </Button>
+              </Center>
+            </Grid>
           </Box>
         </Center>
       </Box>
