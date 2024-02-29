@@ -6,6 +6,7 @@ import {
   Center,
   Grid,
 } from "@chakra-ui/react";
+import { login } from "./components/services/login";
 
 function App() {
   return (
@@ -39,7 +40,12 @@ function App() {
                 />
               </div>
               <Center>
-                <Button colorScheme="teal" size={"sm"} width={"100%"}>
+                <Button
+                  onClick={login}
+                  colorScheme="teal"
+                  size={"sm"}
+                  width={"100%"}
+                >
                   Entrar
                 </Button>
               </Center>
