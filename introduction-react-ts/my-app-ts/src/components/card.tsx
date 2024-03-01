@@ -3,16 +3,17 @@ import { Box, Center, Grid, Input } from "@chakra-ui/react";
 import { ButtonLogin } from "./button/button";
 import { login } from "./services/login";
 import { useEffect, useState } from "react";
-import { api } from "../api";
+import { api, UserAccount } from "../api";
 
 export const Card = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState<null | UserAccount>();
 
   useEffect(() => {
     const getData = async () => {
-      const response = await api;
-      console.log(response);
+      const data: any | UserAccount = await api;
+      setUserData(data);
     };
 
     getData();
@@ -27,7 +28,7 @@ export const Card = () => {
     >
       <Grid gap={"20px"}>
         <Center>
-          <h1>Bem vindo </h1>
+          <h1>Bem vindo</h1>
         </Center>
         <div>
           <label htmlFor="emailInput">Email</label>

@@ -1,4 +1,10 @@
-const account = {
+export interface UserAccount {
+  email: string;
+  name: string;
+  password: string;
+}
+
+const account: UserAccount = {
   email: "pedromiguelmgaldino@gmail.com",
   name: "Pedro Miguel",
   password: "123456",
