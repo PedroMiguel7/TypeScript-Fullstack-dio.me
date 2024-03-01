@@ -26,6 +26,11 @@ export const Card = () => {
       padding={"15px"}
       width={"500px"}
     >
+      {userData === null || userData === undefined ? (
+        <h1>Loading...</h1>
+      ) : (
+        <h1>Loaded</h1>
+      )}
       <Grid gap={"20px"}>
         <Center>
           <h1>Bem vindo</h1>
