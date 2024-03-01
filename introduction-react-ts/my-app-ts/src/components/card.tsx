@@ -1,9 +1,9 @@
 import { Box, Center, Grid, Input } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
+import { api, UserAccount } from "../api";
 import { ButtonLogin } from "./button/button";
 import { login } from "./services/login";
-import { useEffect, useState } from "react";
-import { api, UserAccount } from "../api";
 
 export const Card = () => {
   const [email, setEmail] = useState("");
@@ -26,11 +26,11 @@ export const Card = () => {
       padding={"15px"}
       width={"500px"}
     >
-      {userData === null || userData === undefined ? (
+      {/* {userData === null || userData === undefined ? (
         <h1>Loading...</h1>
       ) : (
         <h1>Loaded</h1>
-      )}
+      )} */}
       <Grid gap={"20px"}>
         <Center>
           <h1>Bem vindo</h1>
