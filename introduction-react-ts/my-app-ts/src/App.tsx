@@ -1,17 +1,14 @@
-import { Box, Center, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import { Card } from "./components/card";
-import { Header } from "./components/header/header";
+import { Layout } from "./components/layout";
 
 function App() {
   return (
     <ChakraProvider>
-      <Header></Header>
-      <Box minHeight={"80vh"} backgroundColor={"#f7fafd"} padding={"25px"}>
-        <Center display={"flex"} alignItems={"center"}>
-          <Card></Card>
-        </Center>
-      </Box>
+      <Layout>
+        <Card />
+      </Layout>
     </ChakraProvider>
   );
 }
