@@ -1,14 +1,16 @@
 import { Center, SimpleGrid, Spinner } from "@chakra-ui/react";
-
-import { CardInfo } from "../components/cardInfo";
-import { useEffect, useState } from "react";
-import { UserAccount, api } from "../api";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+
+import { api, UserAccount } from "../api";
+import { AppContext } from "../App";
+import { CardInfo } from "../components/cardInfo";
 
 export const Account = () => {
   const [userData, setUserData] = useState<null | UserAccount>();
   const { id } = useParams();
   const navigate = useNavigate();
+  const context = useContext(AppContext);
 
   useEffect(() => {
     const getData = async () => {
