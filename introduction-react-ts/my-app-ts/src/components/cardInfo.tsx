@@ -1,10 +1,11 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 interface IcardInfo {
-  text: string;
+  mainContent: string;
+  content: string;
 }
 
-export const CardInfo = ({ text }: IcardInfo) => {
+export const CardInfo = (info: IcardInfo) => {
   return (
     <Box
       minHeight={120}
@@ -13,7 +14,10 @@ export const CardInfo = ({ text }: IcardInfo) => {
       padding={8}
       borderRadius={25}
     >
-      {text}
+      <Text fontSize="2x1" fontWeight={"bold"}>
+        {info.mainContent}
+      </Text>
+      <Text fontSize={"xl"}> {info.content}</Text>
     </Box>
   );
 };
