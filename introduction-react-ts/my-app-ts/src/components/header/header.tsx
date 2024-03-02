@@ -3,8 +3,8 @@ import "./header.css";
 import { Heading } from "@chakra-ui/react";
 import { useContext } from "react";
 
-import { AppContext } from "../../App";
 import bankIcon from "../../assets/bank-icon-5.png";
+import { AppContext } from "../appContext";
 
 export const Header = () => {
   const context = useContext(AppContext);

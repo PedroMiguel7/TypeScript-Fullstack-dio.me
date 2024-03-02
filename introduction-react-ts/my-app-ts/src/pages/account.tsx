@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import { api, UserAccount } from "../api";
-import { AppContext } from "../App";
+import { AppContext } from "../components/appContext";
 import { CardInfo } from "../components/cardInfo";
 
 export const Account = () => {
@@ -11,6 +11,7 @@ export const Account = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const context = useContext(AppContext);
+  const actualDate = new Date();
 
   useEffect(() => {
     const getData = async () => {
@@ -21,11 +22,8 @@ export const Account = () => {
     getData();
   }, []);
 
-  const actualDate = new Date();
-
-  if (userData && id !== userData.id) {
+  if (!context.isLoggedIn || (userData && id !== userData.id)) {
     navigate("/");
-    // return <Center>Usuário não encontrado</Center>;
   }
 
   return (

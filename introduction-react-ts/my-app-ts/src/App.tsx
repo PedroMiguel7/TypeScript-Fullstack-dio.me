@@ -2,22 +2,11 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { createContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import { AppContexrProvider } from "./components/appContext";
 import { Layout } from "./components/layout";
 import { Account } from "./pages/account";
 import { AccountInfo } from "./pages/accountInfo";
 import { Home } from "./pages/home";
-
-interface IAppContext {
-  user: string;
-}
-
-export const AppContext = createContext({} as IAppContext);
-
-export const AppContexrProvider = ({ children }: any) => {
-  const user = "Pedro Miguel";
-
-  return <AppContext.Provider value={{ user }}>{children}</AppContext.Provider>;
-};
 
 function App() {
   return (
