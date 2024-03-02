@@ -3,6 +3,7 @@ export interface UserAccount {
   name: string;
   password: string;
   balance: number;
+  id: string;
 }
 
 const account: UserAccount = {
@@ -10,6 +11,7 @@ const account: UserAccount = {
   name: "Pedro Miguel",
   password: "123456",
   balance: 1000,
+  id: "1",
 };
 
 export const api = new Promise((resolve) => {

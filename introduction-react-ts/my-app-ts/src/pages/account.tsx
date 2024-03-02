@@ -3,9 +3,12 @@ import { Center, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { CardInfo } from "../components/cardInfo";
 import { useEffect, useState } from "react";
 import { UserAccount, api } from "../api";
+import { useNavigate, useParams } from "react-router";
 
 export const Account = () => {
   const [userData, setUserData] = useState<null | UserAccount>();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -17,6 +20,11 @@ export const Account = () => {
   }, []);
 
   const actualDate = new Date();
+
+  if (userData && id !== userData.id) {
+    navigate("/");
+    // return <Center>Usuário não encontrado</Center>;
+  }
 
   return (
     <Center>

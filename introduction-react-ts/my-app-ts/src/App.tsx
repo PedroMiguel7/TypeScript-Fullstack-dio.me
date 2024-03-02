@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Layout } from "./components/layout";
 import { Account } from "./pages/account";
+import { AccountInfo } from "./pages/accountInfo";
 import { Home } from "./pages/home";
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/account" element={<Account />} />
+            <Route path="/account/:id" element={<Account />} />
+            <Route path="/accountInfo" element={<AccountInfo />} />
           </Routes>
         </Layout>
       </ChakraProvider>
