@@ -5,13 +5,14 @@
   padding: 5px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .header img {
   width: 50px;
-  margin-right: calc((100vh / 2) - 50px);
+  pointer-events: stroke;
+  cursor: pointer;
 }
-
 .header h1 {
   margin: 0;
   flex-grow: 1;

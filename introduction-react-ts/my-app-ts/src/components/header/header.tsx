@@ -1,18 +1,37 @@
 import "./header.css";
 
-import { Heading } from "@chakra-ui/react";
+import { Button, Heading } from "@chakra-ui/react";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import bankIcon from "../../assets/bank-icon-5.png";
 import { AppContext } from "../appContext";
 
 export const Header = () => {
   const context = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const loggout = () => {
+    context.setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <div className="header">
-      <img src={bankIcon} alt="bank icon" />
+      <img
+        onClick={() => navigate("/account")}
+        src={bankIcon}
+        alt="bank icon"
+      />
       <Heading> Dio Bank</Heading>
+      {context.isLoggedIn ? (
+        <Button size={"sm"} onClick={() => loggout()}>
+          {" "}
+          Sair
+        </Button>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

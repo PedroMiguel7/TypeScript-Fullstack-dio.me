@@ -1,7 +1,7 @@
 import { Login } from "./login";
 
 const mockEmail = "pedromiguelmgaldino@gmail.com";
-const mockPassword = "123456";
+const mockPassword = "123";
 const mockInvalidLogin = "Email ou senha incorretos";
 const mockWrongText = "wrongText";
 
