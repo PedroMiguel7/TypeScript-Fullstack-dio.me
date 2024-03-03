@@ -7,7 +7,7 @@ import { getAllLocalStorage } from "./components/services/storage";
 import { MainRoutes } from "./routes";
 
 function App() {
-  const localStorage = getAllLocalStorage();
+  const localStorage = getAllLocalStorage("dioBank");
   console.log(localStorage);
 
   return (

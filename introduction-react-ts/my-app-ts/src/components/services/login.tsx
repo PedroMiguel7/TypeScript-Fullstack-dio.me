@@ -1,4 +1,5 @@
 import { api, UserAccount } from "../../api";
+import { creaateLocalStorage } from "./storage";
 
 export const Login = async (
   email: string,
@@ -10,6 +11,13 @@ export const Login = async (
     alert("Email ou senha incorretos");
     return false;
   }
+
+  delete data.password;
+
+  creaateLocalStorage("dioBank", {
+    logged: true,
+    ...data,
+  });
 
   return true;
 };
