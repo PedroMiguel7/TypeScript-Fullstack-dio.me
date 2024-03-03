@@ -1,7 +1,8 @@
+import { accountExemple } from "../../api";
 import { Login } from "./login";
 
-const mockEmail = "pedromiguelmgaldino@gmail.com";
-const mockPassword = "123";
+const mockEmail = accountExemple.email;
+const mockPassword = accountExemple.password;
 const mockInvalidLogin = "Email ou senha incorretos";
 const mockWrongText = "wrongText";
 

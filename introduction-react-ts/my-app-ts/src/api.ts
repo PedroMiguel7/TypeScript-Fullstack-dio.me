@@ -6,8 +6,8 @@ export interface UserAccount {
   id: string;
 }
 
-const account: UserAccount = {
-  email: "pedromiguelmgaldino@gmail.com",
+export const accountExemple: UserAccount = {
+  email: "admin",
   name: "Pedro Miguel",
   password: "123",
   balance: 1000,
@@ -16,6 +16,6 @@ const account: UserAccount = {
 
 export const api = new Promise((resolve) => {
   setTimeout(() => {
-    resolve(account);
+    resolve(accountExemple);
   }, 2000);
 });

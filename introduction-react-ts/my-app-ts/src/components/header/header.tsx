@@ -11,6 +11,7 @@ import { changeLocalStorage } from "../services/storage";
 export const Header = () => {
   const context = useContext(AppContext);
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("dioBank") || "{}");
 
   const loggout = () => {
     context.setIsLoggedIn(false);
@@ -28,7 +29,7 @@ export const Header = () => {
         alt="bank icon"
       />
       <Heading> Dio Bank</Heading>
-      {context.isLoggedIn ? (
+      {context.isLoggedIn || user.name ? (
         <Button size={"sm"} onClick={() => loggout()}>
           {" "}
           Sair

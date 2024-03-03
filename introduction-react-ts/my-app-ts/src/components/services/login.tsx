@@ -12,11 +12,13 @@ export const Login = async (
     return false;
   }
 
-  delete data.password;
   changeLocalStorage("dioBank", {
     logged: true,
-    ...data,
+    id: data.id,
+    email: data.email,
+    name: data.name,
   });
+  
 
   return true;
 };

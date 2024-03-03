@@ -1,6 +1,6 @@
 import { Center, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { api, UserAccount } from "../api";
 import { AppContext } from "../components/appContext";
@@ -8,10 +8,10 @@ import { CardInfo } from "../components/cardInfo";
 
 export const Account = () => {
   const [userData, setUserData] = useState<null | UserAccount>();
-  const { id } = useParams();
+  const actualDate = new Date();
   const navigate = useNavigate();
   const context = useContext(AppContext);
-  const actualDate = new Date();
+  const user = JSON.parse(localStorage.getItem("dioBank") || "{}");
 
   useEffect(() => {
     const getData = async () => {
@@ -22,7 +22,7 @@ export const Account = () => {
     getData();
   }, []);
 
-  if (!context.isLoggedIn || (userData && id !== userData.id)) {
+  if (!user.logged || !context.isLoggedIn) {
     navigate("/");
   }
 
