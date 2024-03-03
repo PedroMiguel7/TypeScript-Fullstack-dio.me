@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { ButtonLogin } from "../components/button";
 import { Card } from "../components/card";
-import { login } from "../components/services/login";
+import { Login } from "../components/services/login";
 
 export const Home = () => {
   const [email, setEmail] = useState("");
@@ -43,7 +43,7 @@ export const Home = () => {
         <Center>
           <ButtonLogin
             onClick={() => {
-              login(email, password);
+              Login(email, password);
             }}
           />
         </Center>

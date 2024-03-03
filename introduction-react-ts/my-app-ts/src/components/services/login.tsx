@@ -1,10 +1,21 @@
-import { api, UserAccount } from "../../api";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const login = async (email: string, password: string): Promise<void> => {
+import { api, UserAccount } from "../../api";
+import { AppContext } from "../appContext";
+
+export const Login = async (email: string, password: string): Promise<void> => {
+  const { setIsLoggedIn } = useContext(AppContext);
+  const navigate = useNavigate();
+
   const data = (await api) as UserAccount;
+
   if (email !== data.email || password !== data.password) {
+    setIsLoggedIn(false);
     alert("Email ou senha incorretos");
     return;
   }
-  alert(`email: ${email}, password: ${password}`);
+
+  setIsLoggedIn(true);
+  navigate(`/account/${data.id}`);
 };
