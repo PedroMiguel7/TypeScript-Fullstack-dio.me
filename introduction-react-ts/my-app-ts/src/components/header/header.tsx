@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import bankIcon from "../../assets/bank-icon-5.png";
 import { AppContext } from "../appContext";
+import { changeLocalStorage } from "../services/storage";
 
 export const Header = () => {
   const context = useContext(AppContext);
@@ -13,6 +14,9 @@ export const Header = () => {
 
   const loggout = () => {
     context.setIsLoggedIn(false);
+    changeLocalStorage("dioBank", {
+      logged: false,
+    });
     navigate("/");
   };
 

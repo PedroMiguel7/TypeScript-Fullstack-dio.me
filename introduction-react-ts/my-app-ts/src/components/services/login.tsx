@@ -1,5 +1,5 @@
 import { api, UserAccount } from "../../api";
-import { creaateLocalStorage } from "./storage";
+import { changeLocalStorage } from "./storage";
 
 export const Login = async (
   email: string,
@@ -13,8 +13,7 @@ export const Login = async (
   }
 
   delete data.password;
-
-  creaateLocalStorage("dioBank", {
+  changeLocalStorage("dioBank", {
     logged: true,
     ...data,
   });
