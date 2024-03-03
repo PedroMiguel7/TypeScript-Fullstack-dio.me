@@ -1,7 +1,9 @@
 import { Input } from "@chakra-ui/input";
 import { Center, Grid } from "@chakra-ui/layout";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { AppContext } from "../components/appContext";
 import { ButtonLogin } from "../components/button";
 import { Card } from "../components/card";
 import { Login } from "../components/services/login";
@@ -9,6 +11,17 @@ import { Login } from "../components/services/login";
 export const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(AppContext);
+
+  const valiateUser = async (email: string, password: string) => {
+    const loggedIn = await Login(email, password);
+
+    if (loggedIn) {
+      setIsLoggedIn(true);
+      navigate("/account/1");
+    }
+  };
 
   return (
     <Card>
@@ -43,7 +56,7 @@ export const Home = () => {
         <Center>
           <ButtonLogin
             onClick={() => {
-              Login(email, password);
+              valiateUser(email, password);
             }}
           />
         </Center>
