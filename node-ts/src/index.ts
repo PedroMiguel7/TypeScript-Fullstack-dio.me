@@ -16,6 +16,8 @@ server.get("/", (req: Request, res: Response) => {
 
 server.post("/user", userController.createUser);
 
+server.get("/user", userController.getAllUsers);
+
 server.listen(port, () => {
   console.log("Server is running on port " + port);
 });
