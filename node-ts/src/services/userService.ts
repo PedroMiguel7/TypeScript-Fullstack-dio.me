@@ -15,6 +15,7 @@ export class UserService {
     };
 
     db.push(user);
+    return user;
   };
 
   getAllUsers = () => {
