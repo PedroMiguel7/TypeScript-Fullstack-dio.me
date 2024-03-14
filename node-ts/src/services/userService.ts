@@ -1,4 +1,4 @@
-const db = [
+const db: { id?: number; name: string; email: string }[] = [
   {
     id: 1,
     name: "Pedro",
@@ -15,8 +15,22 @@ export class UserService {
     };
 
     db.push(user);
-    console.log(db);
   };
 
-  getAllUsers = () => db;
+  getAllUsers = () => {
+    db;
+  };
+
+  deleteUser = (id: number) => {
+    const index = db.findIndex((user) => user.id === id);
+    db.splice(index, 1);
+  };
+
+  updateUser = (id: number, name: string, email: string) => {
+    const index = db.findIndex((user) => user.id === id);
+    db[index] = {
+      name,
+      email,
+    };
+  };
 }
