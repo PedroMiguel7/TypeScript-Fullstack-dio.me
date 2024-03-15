@@ -1,4 +1,10 @@
-const db: { id?: number; name: string; email: string }[] = [
+export interface User {
+  id?: number;
+  name: string;
+  email: string;
+}
+
+const db: User[] = [
   {
     id: 1,
     name: "Pedro",
@@ -7,29 +13,35 @@ const db: { id?: number; name: string; email: string }[] = [
 ];
 
 export class UserService {
+  db: User[];
+
+  constructor(database: User[] = db) {
+    this.db = database;
+  }
+
   createUser = (name: string, email: string) => {
     const user = {
-      id: db.length + 1,
+      id: this.db.length + 1,
       name,
       email,
     };
 
-    db.push(user);
+    this.db.push(user);
     return user;
   };
 
   getAllUsers = () => {
-    db;
+    this.db;
   };
 
   deleteUser = (id: number) => {
     const index = db.findIndex((user) => user.id === id);
-    db.splice(index, 1);
+    this.db.splice(index, 1);
   };
 
   updateUser = (id: number, name: string, email: string) => {
     const index = db.findIndex((user) => user.id === id);
-    db[index] = {
+    this.db[index] = {
       name,
       email,
     };
