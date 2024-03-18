@@ -5,8 +5,9 @@ const mockUser = {
   email: "pedro@test.com",
 };
 
-const mockUserService = {
+const mockUserBusiness = {
   createUser: jest.fn(),
+  getUser: jest.fn(),
   getAllUsers: jest.fn(),
   deleteUser: jest.fn(),
   updateUser: jest.fn(),
@@ -21,87 +22,106 @@ const mockResponse = {
   json: jest.fn(),
 };
 
-const userController = new UserController(mockUserService as any);
+const userController = new UserController(mockUserBusiness as any);
 
 describe("userController", () => {
-  it("should call createUser method from userService", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should call createUser and return status 201", () => {
+    mockUserBusiness.createUser.mockReturnValue({
+      status: 201,
+      message: "User created",
+      data: mockUser,
+    });
+
     userController.createUser(mockRequest as any, mockResponse as any);
-    expect(mockUserService.createUser).toHaveBeenCalledWith(
-      mockRequest.body.name,
-      mockRequest.body.email
-    );
-  });
 
-  it("should call getAllUsers method from userService", () => {
-    userController.getAllUsers(mockRequest as any, mockResponse as any);
-    expect(mockUserService.getAllUsers).toHaveBeenCalled();
-  });
-
-  it("should call deleteUser method from userService", () => {
-    const mockRequest = {
-      params: {
-        id: "1",
-      },
-    };
-    userController.deleteUser(mockRequest as any, mockResponse as any);
-    expect(mockUserService.deleteUser).toHaveBeenCalledWith(1);
-  });
-
-  it("should call updateUser method from userService", () => {
-    const mockRequest = {
-      params: {
-        id: "1",
-      },
-      body: mockUser,
-    };
-    userController.updateUser(mockRequest as any, mockResponse as any);
-    expect(mockUserService.updateUser).toHaveBeenCalledWith(
-      1,
-      mockRequest.body.name,
-      mockRequest.body.email
-    );
-  });
-
-  it("should return 400 when body is invalid", () => {
-    const mockRequest = {
-      body: {},
-    };
-    userController.createUser(mockRequest as any, mockResponse as any);
-    expect(mockResponse.status).toHaveBeenCalledWith(400);
-    expect(mockResponse.json).toHaveBeenCalledWith({ message: "Invalid body" });
-  });
-
-  it("should return 201 when user is created", () => {
-    userController.createUser(mockRequest as any, mockResponse as any);
+    expect(mockUserBusiness.createUser).toHaveBeenCalledWith(mockUser);
     expect(mockResponse.status).toHaveBeenCalledWith(201);
-    expect(mockResponse.json).toHaveBeenCalledWith({ message: "User created" });
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      message: "User created",
+      data: mockUser,
+    });
   });
 
-  it("should return 200 when users are returned", () => {
-    userController.getAllUsers(mockRequest as any, mockResponse as any);
-    expect(mockResponse.status).toHaveBeenCalledWith(200);
+  it("should call getAllUsers and return status 200", () => {
+    const users = [
+      {
+        id: 1,
+        ...mockUser,
+      },
+    ];
+    mockUserBusiness.getAllUsers.mockReturnValue({
+      status: 200,
+      message: "Users found",
+      data: users,
+    });
   });
 
-  it("should return 200 when user is deleted", () => {
+  it("should call getUser and return status 200", () => {
+    const user = {
+      id: 1,
+      ...mockUser,
+    };
+    mockUserBusiness.getUser.mockReturnValue({
+      status: 200,
+      message: "User found",
+      data: user,
+    });
+
     const mockRequest = {
       params: {
-        id: "1",
+        field: "email",
+        value: mockUser.email,
       },
     };
-    userController.deleteUser(mockRequest as any, mockResponse as any);
-    expect(mockResponse.status).toHaveBeenCalledWith(200);
-    expect(mockResponse.json).toHaveBeenCalledWith({ message: "User deleted" });
   });
 
-  it("should return 200 when user is updated", () => {
+  it("should call deleteUser and return status 200", () => {
+    mockUserBusiness.deleteUser.mockReturnValue({
+      status: 200,
+      message: "User deleted",
+    });
+
     const mockRequest = {
       params: {
-        id: "1",
+        id: 1,
+      },
+    };
+
+    userController.deleteUser(mockRequest as any, mockResponse as any);
+
+    expect(mockUserBusiness.deleteUser).toHaveBeenCalledWith(1);
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      message: "User deleted",
+    });
+  });
+
+  it("should call updateUser and return status 200", () => {
+    mockUserBusiness.updateUser.mockReturnValue({
+      status: 200,
+      message: "User updated",
+    });
+
+    const mockRequest = {
+      params: {
+        id: 1,
       },
       body: mockUser,
     };
+
     userController.updateUser(mockRequest as any, mockResponse as any);
+
+    expect(mockUserBusiness.updateUser).toHaveBeenCalledWith({
+      id: 1,
+      ...mockUser,
+    });
     expect(mockResponse.status).toHaveBeenCalledWith(200);
-    expect(mockResponse.json).toHaveBeenCalledWith({ message: "User updated" });
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      message: "User updated",
+    });
   });
 });

@@ -1,40 +1,46 @@
 import { Request, Response } from "express";
 
-import { UserService } from "../services/userService";
+import { UserBusiness } from "../business/userbusiness";
+import { User } from "../services/userService";
 
 export class UserController {
-  private userService: UserService;
+  private userBusiness: UserBusiness;
 
-  constructor(serviceUser: UserService = new UserService()) {
-    this.userService = serviceUser;
+  constructor(businessUser: UserBusiness = new UserBusiness()) {
+    this.userBusiness = businessUser;
   }
 
   public createUser = (req: Request, res: Response) => {
-    const user = req.body;
-    if (!user.name || !user.email)
-      return res.status(400).json({ message: "Invalid body" });
-    this.userService.createUser(user.name, user.email);
-    return res.status(201).json({ message: "User created" });
+    const resp = this.userBusiness.createUser(req.body);
+    return res
+      .status(resp.status)
+      .json({ message: resp.message, data: resp.data || null });
   };
 
-  public getAllUsers = (req: Request, res: Response) => {
-    const users = this.userService.getAllUsers();
-    return res.status(200).json(users);
+  public getAllUsers = (_req: Request, res: Response) => {
+    const users = this.userBusiness.getAllUsers();
+    return res
+      .status(users.status)
+      .json({ message: users.message, data: users.data });
+  };
+
+  public getUser = (req: Request, res: Response) => {
+    const { field, value } = req.params;
+    const user = this.userBusiness.getUser(field as keyof User, value);
+    return res
+      .status(user.status)
+      .json({ message: user.message, data: user.data || null });
   };
 
   public deleteUser = (req: Request, res: Response) => {
     const { id } = req.params;
-    this.userService.deleteUser(Number(id));
-    return res.status(200).json({ message: "User deleted" });
+    const resp = this.userBusiness.deleteUser(Number(id));
+    return res.status(resp.status).json({ message: resp.message });
   };
 
   public updateUser = (req: Request, res: Response) => {
     const { id } = req.params;
-    const user = req.body;
-
-    if (!user.name || !user.email)
-      return res.status(400).json({ message: "Invalid body" });
-    this.userService.updateUser(Number(id), user.name, user.email);
-    return res.status(200).json({ message: "User updated" });
+    const resp = this.userBusiness.updateUser({ id, ...req.body });
+    return res.status(resp.status).json({ message: resp.message });
   };
 }
