@@ -8,8 +8,9 @@
     "start": "node build/index.js",
     "dev": "ts-node-dev src/index.ts",
     "test": "jest",
-    "typeorm": "node ./node_modules/typeorm/cli.js",
-    "migration:create": "npm run typeorm migration:create -n"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "npm run typeorm migration:create -n",
+    "migration:run": "npm run typeorm migration:run"
   },
   "keywords": [],
   "author": "",
