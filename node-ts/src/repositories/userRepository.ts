@@ -10,18 +10,23 @@ export class UserRepository {
   }
 
   createUser = async (user: User): Promise<User> => {
-    return this.manager.save(user);
+    return await this.manager.save(user);
   };
 
   getUser = async (
     field: string,
     value: string | number
   ): Promise<User | null> => {
-    return this.manager.findOne(User, { where: { [field]: value } });
+    return await this.manager.findOne(User, { where: { [field]: value } });
+  };
+
+  updateUser = async (id: number, user: User): Promise<User> => {
+    await this.manager.update(User, id, user);
+    return user;
   };
 
   getAllUsers = async (): Promise<User[]> => {
-    return this.manager.find(User);
+    return await this.manager.find(User);
   };
 
   deleteUser = async (id: number): Promise<void> => {

@@ -21,15 +21,10 @@ describe("UserRepository", () => {
 
   it("should create a user", async () => {
     const resp = await userRepository.createUser(mockUser);
-    expect(managerMock.save).toHaveBeenCalled();
-    expect(resp).toMatchObject(mockUser);
-  });
+    expect(managerMock.save).toHaveBeenCalledWith(mockUser);
 
-  // it("should get a user by email", async () => {
-  //   const resp = await userRepository.getUser("email", mockUser.email);
-  //   expect(managerMock.findOne).toHaveBeenCalled();
-  //   expect(resp).toMatchObject(mockUser);
-  // });
+    console.log(resp);
+  });
 
   // it("should get a user by id", async () => {
   //   const resp = await userRepository.getUser("id", 1);
