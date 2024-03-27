@@ -24,14 +24,12 @@ export class UserController {
       return res.status(400).json({ message: businessResp.error });
     }
     const resp = this.userService.createUser(req.body);
-    return res
-      .status(201)
-      .json({ message: "create success full", data: resp || null });
+    return res.status(201).json({ message: "create success full", data: resp });
   };
 
   public getAllUsers = (req: Request, res: Response) => {
     const users = this.userService.getAllUsers();
-    return res.status(200).json({ message: "", data: users || null });
+    return res.status(200).json({ message: "", data: users });
   };
 
   public getUser = (req: Request, res: Response) => {
@@ -45,19 +43,19 @@ export class UserController {
     }
 
     const user = this.userService.getUser(field as keyof GetUser, value);
-    return res.status(200).json({ message: "", data: user || null });
+    return res.status(200).json({ message: "", data: user });
   };
 
-  public deleteUser = (req: Request, res: Response) => {
+  public deleteUser = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const businessResp = this.userBusiness.deleteUser(Number(id));
+    const businessResp = await this.userBusiness.deleteUser(Number(id));
     if (businessResp.error) {
       return res.status(400).json({ message: businessResp.error });
     }
 
     this.userService.deleteUser(Number(id));
-    return res.status(200).json({ message: "" });
+    return res.status(200).json({ message: "User deleted!" });
   };
 
   public updateUser = (req: Request, res: Response) => {
@@ -67,6 +65,6 @@ export class UserController {
       return res.status(400).json({ message: businessResp.error });
     }
     const resp = this.userService.updateUser({ id: Number(id), ...req.body });
-    return res.status(200).json({ message: "", data: resp || null });
+    return res.status(200).json({ message: "User updated", data: resp });
   };
 }

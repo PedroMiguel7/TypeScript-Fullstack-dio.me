@@ -12,9 +12,9 @@ export class UserBusiness {
     if (!user.name || !user.email || !user.password)
       return { error: "Invalid body" };
 
-    // this.userService.getUser("email", user.email).then((response) => {
-    //   if (response) return { error: "User already exists" };
-    // });
+    this.userService.getUser("email", user.email).then((response) => {
+      if (response) return { error: "User already exists" };
+    });
 
     return { error: null };
   };
@@ -27,12 +27,11 @@ export class UserBusiness {
     return { error: null };
   };
 
-  deleteUser = (id: number) => {
+  deleteUser = async (id: number) => {
     if (!id) return { error: "Invalid params" };
 
-    // this.userService.getUser("id", id).then((response) => {
-    //   if (!response) return { error: "User not found" };
-    // });
+    const user = await this.userService.getUser("id", id);
+    if (!user) return { error: "User not found" };
 
     return { error: null };
   };
@@ -40,9 +39,9 @@ export class UserBusiness {
   updateUser = (user: User) => {
     if (!user.name || !user.email) return { error: "Invalid body" };
 
-    // this.userService.getUser("id", user.id!).then((response) => {
-    //   if (!response) return { error: "User not found" };
-    // });
+    this.userService.getUser("id", user.id!).then((response) => {
+      if (!response) return { error: "User not found" };
+    });
 
     return { error: null };
   };
