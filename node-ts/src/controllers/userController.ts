@@ -1,46 +1,72 @@
 import { Request, Response } from "express";
 
 import { UserBusiness } from "../business/userbusiness";
-import { User } from "../services/userService";
+import { UserService } from "../services/userService";
+import { User } from "../entities/user";
+
+interface GetUser extends Pick<User, "id" | "email"> {}
 
 export class UserController {
   private userBusiness: UserBusiness;
+  private userService: UserService;
 
-  constructor(businessUser: UserBusiness = new UserBusiness()) {
+  constructor(
+    businessUser: UserBusiness = new UserBusiness(),
+    userService: UserService = new UserService()
+  ) {
     this.userBusiness = businessUser;
+    this.userService = userService;
   }
 
   public createUser = (req: Request, res: Response) => {
-    const resp = this.userBusiness.createUser(req.body);
+    const businessResp = this.userBusiness.createUser(req.body);
+    if (businessResp.error) {
+      return res.status(400).json({ message: businessResp.error });
+    }
+    const resp = this.userService.createUser(req.body);
     return res
-      .status(resp.status)
-      .json({ message: resp.message, data: resp.data || null });
+      .status(201)
+      .json({ message: "create success full", data: resp || null });
   };
 
-  public getAllUsers = (_req: Request, res: Response) => {
-    const users = this.userBusiness.getAllUsers();
-    return res
-      .status(users.status)
-      .json({ message: users.message, data: users.data });
+  public getAllUsers = (req: Request, res: Response) => {
+    const users = this.userService.getAllUsers();
+    return res.status(200).json({ message: "", data: users || null });
   };
 
   public getUser = (req: Request, res: Response) => {
     const { field, value } = req.params;
-    const user = this.userBusiness.getUser(field as keyof User, value);
-    return res
-      .status(user.status)
-      .json({ message: user.message, data: user.data || null });
+    const businessResp = this.userBusiness.getUser(
+      field as keyof GetUser,
+      value
+    );
+    if (businessResp.error) {
+      return res.status(400).json({ message: businessResp.error });
+    }
+
+    const user = this.userService.getUser(field as keyof GetUser, value);
+    return res.status(200).json({ message: "", data: user || null });
   };
 
   public deleteUser = (req: Request, res: Response) => {
     const { id } = req.params;
-    const resp = this.userBusiness.deleteUser(Number(id));
-    return res.status(resp.status).json({ message: resp.message });
+
+    const businessResp = this.userBusiness.deleteUser(Number(id));
+    if (businessResp.error) {
+      return res.status(400).json({ message: businessResp.error });
+    }
+
+    this.userService.deleteUser(Number(id));
+    return res.status(200).json({ message: "" });
   };
 
   public updateUser = (req: Request, res: Response) => {
     const { id } = req.params;
-    const resp = this.userBusiness.updateUser({ id, ...req.body });
-    return res.status(resp.status).json({ message: resp.message });
+    const businessResp = this.userBusiness.updateUser({ id, ...req.body });
+    if (businessResp.error) {
+      return res.status(400).json({ message: businessResp.error });
+    }
+    const resp = this.userService.updateUser({ id: Number(id), ...req.body });
+    return res.status(200).json({ message: "", data: resp || null });
   };
 }

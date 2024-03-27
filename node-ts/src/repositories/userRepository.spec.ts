@@ -22,8 +22,6 @@ describe("UserRepository", () => {
   it("should create a user", async () => {
     const resp = await userRepository.createUser(mockUser);
     expect(managerMock.save).toHaveBeenCalledWith(mockUser);
-
-    console.log(resp);
   });
 
   // it("should get a user by id", async () => {

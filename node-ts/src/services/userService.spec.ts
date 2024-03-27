@@ -1,21 +1,9 @@
 import { UserService } from "./userService";
 
-jest.mock(
-  "../repositories/userRepository"
-  // , () => {
-  //   return {
-  //     UserRepository: jest.fn().mockImplementation(() => {
-  //       return {
-  //         createUser: jest.fn().mockImplementation((user) => user),
-  //         getAllUsers: jest.fn().mockImplementation(() => [userMock]),
-  //         getUser: jest.fn().mockImplementation((field, value) => userMock),
-  //         deleteUser: jest.fn().mockImplementation(() => true),
-  //         updateUser: jest.fn().mockImplementation((id, user) => user),
-  //       };
-  //     }),
-  //   };
-  // }
-);
+jest.mock("../repositories/userRepository");
+jest.mock("../database", () => {
+  initialize: jest.fn();
+});
 
 const mockUserRepository = require("../repositories/userRepository");
 
@@ -41,5 +29,14 @@ describe("UserService", () => {
     const response = await userService.createUser(userMock);
     expect(mockUserRepository.createUser).toHaveBeenCalledWith(userMock);
     expect(response).toEqual({ id: 1, ...userMock });
+  });
+
+  it("should get all users", async () => {
+    mockUserRepository.getAllUsers = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve([userMock, otherUserMock]));
+    const response = await userService.getAllUsers();
+    expect(mockUserRepository.getAllUsers).toHaveBeenCalled();
+    expect(response).toEqual([userMock, otherUserMock]);
   });
 });
