@@ -14,8 +14,8 @@ export class UserService {
     return this.userRepository.createUser(newUser);
   };
 
-  getAllUsers = () => {
-    return this.userRepository.getAllUsers();
+  getAllUsers = (filters: any) => {
+    return this.userRepository.getAllUsers(filters);
   };
 
   getUser = (

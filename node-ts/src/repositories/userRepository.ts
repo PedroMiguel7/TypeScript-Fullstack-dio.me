@@ -1,4 +1,4 @@
-import { EntityManager } from "typeorm";
+import { EntityManager, Like } from "typeorm";
 
 import { User } from "../entities/user";
 
@@ -17,7 +17,9 @@ export class UserRepository {
     field: string,
     value: string | number
   ): Promise<User | null> => {
-    return await this.manager.findOne(User, { where: { [field]: value } });
+    return await this.manager.findOne(User, {
+      where: { [field]: Like(value) },
+    });
   };
 
   updateUser = async (id: number, user: User): Promise<User> => {
@@ -25,8 +27,29 @@ export class UserRepository {
     return user;
   };
 
-  getAllUsers = async (): Promise<User[]> => {
-    return await this.manager.find(User);
+  getAllUsers = async (filters: {
+    [key: string]: string | number;
+  }): Promise<User[]> => {
+    let queryOptions: any = {};
+
+    for (const key in filters) {
+      if (Object.prototype.hasOwnProperty.call(filters, key)) {
+        const value = filters[key];
+        if (typeof value === "string") {
+          queryOptions.where = {
+            ...queryOptions.where,
+            [key]: Like(`%${value}%`),
+          };
+        } else {
+          queryOptions.where = {
+            ...queryOptions.where,
+            [key]: value,
+          };
+        }
+      }
+    }
+
+    return await this.manager.find(User, queryOptions);
   };
 
   deleteUser = async (id: number): Promise<void> => {

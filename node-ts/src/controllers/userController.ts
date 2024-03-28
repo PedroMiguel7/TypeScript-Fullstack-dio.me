@@ -29,8 +29,7 @@ export class UserController {
 
   public getAllUsers = async (req: Request, res: Response) => {
     const filters = req.query;
-    // console.log(filters);
-    const users = await this.userService.getAllUsers();
+    const users = await this.userService.getAllUsers(filters);
     return res
       .status(200)
       .json({ message: "Users retrieved successfully", data: users });
