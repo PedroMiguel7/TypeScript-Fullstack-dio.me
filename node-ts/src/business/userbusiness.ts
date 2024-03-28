@@ -8,13 +8,12 @@ export class UserBusiness {
     this.userService = serviceUser;
   }
 
-  createUser = (user: User) => {
+  createUser = async (user: User) => {
     if (!user.name || !user.email || !user.password)
       return { error: "Invalid body" };
 
-    this.userService.getUser("email", user.email).then((response) => {
-      if (response) return { error: "User already exists" };
-    });
+    const userExisting = await this.userService.getUser("email", user.email);
+    if (userExisting) return { error: "Email is invalid or already taken" };
 
     return { error: null };
   };
@@ -36,12 +35,15 @@ export class UserBusiness {
     return { error: null };
   };
 
-  updateUser = (user: User) => {
+  updateUser = async (user: User) => {
     if (!user.name || !user.email) return { error: "Invalid body" };
 
-    this.userService.getUser("id", user.id!).then((response) => {
-      if (!response) return { error: "User not found" };
-    });
+    const userExisting = await this.userService.getUser("id", user.id!);
+    if (!userExisting) return { error: "User not found" };
+
+    const emailExisting = await this.userService.getUser("email", user.email);
+    if (emailExisting && userExisting.email !== emailExisting.email)
+      return { error: "Email is invalid or already taken" };
 
     return { error: null };
   };

@@ -7,7 +7,8 @@ export class User1711115219017 implements MigrationInterface {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        data_criacao TIMESTAMP DEFAULT (datetime('now','localtime'))
       )
     `);
   }

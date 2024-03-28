@@ -15,6 +15,4 @@ server.get("/", (req: Request, res: Response) => {
   return res.status(200).json({ message: "Hello World" });
 });
 
-server.listen(port, () => {
-  console.log("Server is running on port " + port);
-});
+server.listen(port, () => {});
