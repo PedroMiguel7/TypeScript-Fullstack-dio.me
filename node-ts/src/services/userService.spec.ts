@@ -39,4 +39,63 @@ describe("UserService", () => {
     expect(mockUserRepository.getAllUsers).toHaveBeenCalled();
     expect(response).toEqual([userMock, otherUserMock]);
   });
+
+  it("should get a user by id", async () => {
+    mockUserRepository.getUser = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve(userMock));
+    const response = await userService.getUser("id", 1);
+    expect(mockUserRepository.getUser).toHaveBeenCalledWith("id", 1);
+    expect(response).toEqual(userMock);
+  });
+
+  it("should delete a user", async () => {
+    mockUserRepository.deleteUser = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve());
+    await userService.deleteUser(1);
+    expect(mockUserRepository.deleteUser).toHaveBeenCalledWith(1);
+  });
+
+  it("should update a user", async () => {
+    mockUserRepository.updateUser = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve({ id: 1, ...userMock }));
+    const response = await userService.updateUser({ id: 1, ...userMock });
+    expect(mockUserRepository.updateUser).toHaveBeenCalledWith(1, {
+      id: 1,
+      ...userMock,
+    });
+    expect(response).toEqual({ id: 1, ...userMock });
+  });
+
+  it("should get an authenticated user", async () => {
+    mockUserRepository.getUserByemailAndPassword = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve(userMock));
+    const response = await userService.getAuthenticatedUser(
+      userMock.email,
+      userMock.password
+    );
+    expect(mockUserRepository.getUserByemailAndPassword).toHaveBeenCalledWith(
+      userMock.email,
+      userMock.password
+    );
+    expect(response).toEqual(userMock);
+  });
+
+  it("should get a token", async () => {
+    mockUserRepository.getUserByemailAndPassword = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve({ ...userMock, id: "1" }));
+    const response = await userService.getToken(
+      userMock.email,
+      userMock.password
+    );
+    expect(mockUserRepository.getUserByemailAndPassword).toHaveBeenCalledWith(
+      userMock.email,
+      userMock.password
+    );
+    expect(response).toEqual("1");
+  });
 });

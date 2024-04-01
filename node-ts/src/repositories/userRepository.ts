@@ -55,4 +55,13 @@ export class UserRepository {
   deleteUser = async (id: number): Promise<void> => {
     await this.manager.delete(User, id);
   };
+
+  getUserByemailAndPassword = async (
+    email: string,
+    password: string
+  ): Promise<User | null> => {
+    return await this.manager.findOne(User, {
+      where: { email, password },
+    });
+  };
 }
