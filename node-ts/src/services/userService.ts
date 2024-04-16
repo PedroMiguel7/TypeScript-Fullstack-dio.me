@@ -1,3 +1,5 @@
+import { sign } from "jsonwebtoken";
+
 import { AppDataSource } from "../database";
 import { User } from "../entities/user";
 import { UserRepository } from "../repositories/userRepository";
@@ -40,9 +42,27 @@ export class UserService {
     return this.userRepository.getUserByemailAndPassword(email, password);
   };
 
-  getToken = async (email: string, password: string) => {
+  getToken = async (
+    email: string,
+    password: string
+  ): Promise<string | undefined> => {
     const user = await this.getAuthenticatedUser(email, password);
 
-    return user?.id;
+    if (user) {
+      const tokenData = {
+        name: user.name,
+        email: user.email,
+      };
+
+      const tokenKey = "123456789";
+
+      const tokenOptions = {
+        subject: `${user.id}`,
+      };
+
+      const token = sign(tokenData, tokenKey, tokenOptions);
+
+      return token;
+    }
   };
 }

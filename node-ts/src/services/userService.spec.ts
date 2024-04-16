@@ -1,9 +1,11 @@
 import { UserService } from "./userService";
+import * as jwt from "jsonwebtoken";
 
 jest.mock("../repositories/userRepository");
 jest.mock("../database", () => {
   initialize: jest.fn();
 });
+jest.mock("jsonwebtoken");
 
 const mockUserRepository = require("../repositories/userRepository");
 
@@ -87,15 +89,17 @@ describe("UserService", () => {
   it("should get a token", async () => {
     mockUserRepository.getUserByemailAndPassword = jest
       .fn()
-      .mockImplementation(() => Promise.resolve({ ...userMock, id: "1" }));
-    const response = await userService.getToken(
-      userMock.email,
-      userMock.password
-    );
-    expect(mockUserRepository.getUserByemailAndPassword).toHaveBeenCalledWith(
-      userMock.email,
-      userMock.password
-    );
-    expect(response).toEqual("1");
+      .mockImplementation(() => Promise.resolve({ ...userMock }));
+    jest.spyOn(jwt, "sign").mockImplementation(() => "token");
+    const token = await userService.getToken(userMock.email, userMock.password);
+    expect(token).toEqual("token");
+  });
+
+  it("should return undefined if user is not found", async () => {
+    mockUserRepository.getUserByemailAndPassword = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve(null));
+    const token = await userService.getToken(userMock.email, userMock.password);
+    expect(token).toBeUndefined();
   });
 });

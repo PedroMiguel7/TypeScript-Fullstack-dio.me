@@ -8,9 +8,9 @@ const userController = new UserController();
 const loginController = new LoginController();
 
 router.post("/user", userController.createUser);
-router.get("/users", userController.getAllUsers);
 router.get("/user", userController.getUser);
 router.put("/user/:id", userController.updateUser);
 router.delete("/user/:id", userController.deleteUser);
+router.get("/users", userController.getAllUsers);
 
 router.post("/login", loginController.login);
