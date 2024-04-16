@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { UserBusiness } from "../business/userbusiness";
 import { User } from "../entities/user";
 import { UserService } from "../services/userService";
+import { hash } from "bcrypt";
 
 interface GetUser extends Pick<User, "id" | "email"> {}
 
@@ -23,7 +24,11 @@ export class UserController {
     if (businessResp.error) {
       return res.status(400).json({ message: businessResp.error });
     }
-    const resp = await this.userService.createUser(req.body);
+    const passWordHash = await hash(req.body.password, 8);
+    const resp = await this.userService.createUser({
+      ...req.body,
+      password: passWordHash,
+    });
     return res.status(201).json({ message: "create successfully", data: resp });
   };
 
@@ -54,12 +59,12 @@ export class UserController {
   public deleteUser = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const businessResp = await this.userBusiness.deleteUser(Number(id));
+    const businessResp = await this.userBusiness.deleteUser(id);
     if (businessResp.error) {
       return res.status(400).json({ message: businessResp.error });
     }
 
-    this.userService.deleteUser(Number(id));
+    this.userService.deleteUser(id);
     return res.status(200).json({ message: "User deleted!" });
   };
 
@@ -73,7 +78,7 @@ export class UserController {
       return res.status(400).json({ message: businessResp.error });
     }
     const resp = await this.userService.updateUser({
-      id: Number(id),
+      id,
       ...req.body,
     });
     return res.status(200).json({ message: "User updated", data: resp });

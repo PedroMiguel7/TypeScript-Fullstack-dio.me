@@ -22,16 +22,16 @@ export class UserService {
 
   getUser = (
     field: keyof Pick<User, "id" | "email">,
-    value: string | number
+    value: string
   ): Promise<User | null> => {
     return this.userRepository.getUser(field, value);
   };
 
-  deleteUser = (id: number): Promise<void> => {
+  deleteUser = (id: string): Promise<void> => {
     return this.userRepository.deleteUser(id);
   };
 
-  updateUser = (user: User & { id: number }): Promise<User> => {
+  updateUser = (user: User): Promise<User> => {
     return this.userRepository.updateUser(user.id, user);
   };
 
@@ -57,7 +57,7 @@ export class UserService {
       const tokenKey = "123456789";
 
       const tokenOptions = {
-        subject: `${user.id}`,
+        subject: user.id,
       };
 
       const token = sign(tokenData, tokenKey, tokenOptions);

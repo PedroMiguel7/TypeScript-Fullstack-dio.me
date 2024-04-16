@@ -8,9 +8,7 @@ export const AppDataSource = new DataSource({
 });
 
 AppDataSource.initialize()
-  .then(() => {
-    console.log("Database is running");
-  })
+  .then()
   .catch((error) => {
     console.log("Error on database connection: " + error);
   });

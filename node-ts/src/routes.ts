@@ -8,7 +8,7 @@ export const router = Router();
 const userController = new UserController();
 const loginController = new LoginController();
 
-router.post("/user", verifyAuth, userController.createUser);
+router.post("/user", userController.createUser);
 router.get("/user", verifyAuth, userController.getUser);
 router.put("/user/:id", verifyAuth, userController.updateUser);
 router.delete("/user/:id", verifyAuth, userController.deleteUser);

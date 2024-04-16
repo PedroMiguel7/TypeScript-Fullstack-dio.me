@@ -17,12 +17,14 @@ export class UserRepository {
     field: string,
     value: string | number
   ): Promise<User | null> => {
-    return await this.manager.findOne(User, {
+    const user = await this.manager.findOne(User, {
       where: { [field]: Like(value) },
     });
+    this.removeSensitiveInfo(user);
+    return user;
   };
 
-  updateUser = async (id: number, user: User): Promise<User> => {
+  updateUser = async (id: string, user: User): Promise<User> => {
     await this.manager.update(User, id, user);
     return user;
   };
@@ -48,11 +50,12 @@ export class UserRepository {
         }
       }
     }
-
-    return await this.manager.find(User, queryOptions);
+    const users = await this.manager.find(User, queryOptions);
+    users.forEach((user) => this.removeSensitiveInfo(user));
+    return users;
   };
 
-  deleteUser = async (id: number): Promise<void> => {
+  deleteUser = async (id: string): Promise<void> => {
     await this.manager.delete(User, id);
   };
 
@@ -64,4 +67,10 @@ export class UserRepository {
       where: { email, password },
     });
   };
+
+  private removeSensitiveInfo(user: Partial<User> | null): void {
+    if (user) {
+      delete user.password;
+    }
+  }
 }

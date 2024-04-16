@@ -11,10 +11,8 @@ export class UserBusiness {
   createUser = async (user: User) => {
     if (!user.name || !user.email || !user.password)
       return { error: "Invalid body" };
-
     const userExisting = await this.userService.getUser("email", user.email);
     if (userExisting) return { error: "Email is invalid or already taken" };
-
     return { error: null };
   };
 
@@ -26,25 +24,20 @@ export class UserBusiness {
     return { error: null };
   };
 
-  deleteUser = async (id: number) => {
+  deleteUser = async (id: string) => {
     if (!id) return { error: "Invalid params" };
-
     const user = await this.userService.getUser("id", id);
     if (!user) return { error: "User not found" };
-
     return { error: null };
   };
 
   updateUser = async (user: User) => {
     if (!user.name || !user.email) return { error: "Invalid body" };
-
     const userExisting = await this.userService.getUser("id", user.id!);
     if (!userExisting) return { error: "User not found" };
-
     const emailExisting = await this.userService.getUser("email", user.email);
     if (emailExisting && userExisting.email !== emailExisting.email)
       return { error: "Email is invalid or already taken" };
-
     return { error: null };
   };
 }
